@@ -2,6 +2,7 @@ import React from "react";
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
+import sampleFishes from '../sample-fishes';
 
 class App extends React.Component {
 
@@ -16,9 +17,24 @@ state = {
     fishes: {},
     order: {}
 };
+
 addFish = (fish) => {
-    console.log('adding a fish!');
-}
+    //1. take a copy of the existing state (never want to reach into state and modify it directly) - modify it directly issues with performance
+    const fishes = {...this.state.fishes};
+    //2. add our new fish to that fishes variable
+    fishes[`fish${Date.now()}`] = fish;
+    // 3. set new fishes object to state
+    this.setState({
+        fishes: fishes
+    });
+};
+loadSampleFishes = () => {
+    this.setState({ 
+        fishes: sampleFishes 
+    });
+};
+
+
 
     render() {
         return (
@@ -28,7 +44,7 @@ addFish = (fish) => {
 
                 </div>
                 <Order />
-                <Inventory addFish={this.addFish}/>
+                <Inventory addFish={this.addFish} loadSampleFishes={this.loadSampleFishes} />
 
             </div>
         )
