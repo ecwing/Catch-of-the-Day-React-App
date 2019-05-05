@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { formatPrice } from '../helpers';
 
 class Order extends Component {
+    
     renderOrder = (key) => {
         const fish = this.props.fishes[key];
         const count = this.props.order[key];
@@ -15,11 +16,14 @@ class Order extends Component {
         }
         return (
             <li key={key}>
-        {count} lbs {fish.name}
-        {formatPrice(count * fish.price)}
-        </li>
-        )
-    }
+                {count} lbs {fish.name}
+                {formatPrice(count * fish.price)}
+                <button onClick={() => this.props.removeFromOrder(key)}>
+                    &times;
+                </button>
+            </li>
+        );
+    };
 
     render() {
         const orderIds = Object.keys(this.props.order);
